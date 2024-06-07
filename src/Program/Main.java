@@ -1,17 +1,12 @@
 package Program;
 
 import entities.Person;
-import jdk.jshell.spi.ExecutionControl;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
 
@@ -36,12 +31,41 @@ public class Main {
         String name = sc.nextLine();
         String email = sc.nextLine();
         Integer age = sc.nextInt();
-        sc.nextLine();
         Double height = sc.nextDouble();
 
         Person person = new Person(name, email, age, height);
 
-        System.out.println(person);
+
+        File files = new File("D:\\Workspace\\ws-IntelliJ\\JAVA- RegisterSystem\\src\\Pessoas");
+        int count = 1;
+        for (File file : files.listFiles()){
+            count++;
+        }
+
+        String archiveName = person.getName().replaceAll("\\s", "").toUpperCase();
+
+        File archive = new File("D:\\Workspace\\ws-IntelliJ\\JAVA- RegisterSystem\\src\\Pessoas\\"+count+"-"+archiveName+".txt");
+
+        try{
+            archive.createNewFile();
+        }catch (IOException e){
+            System.out.println(e);
+        }
+
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(archive))){
+                bw.write(person.getName());
+                bw.newLine();
+                bw.write(person.getEmail());
+                bw.newLine();
+                bw.write(String.valueOf(person.getAge()));
+                bw.newLine();
+                bw.write(String.valueOf(person.getHeight()));
+
+
+        }catch (IOException e){
+            System.out.println(e);
+        }
+
 
 
         sc.close();

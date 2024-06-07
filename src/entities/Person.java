@@ -18,9 +18,6 @@ public class Person {
         if (!email.contains("@")) {
             throw new PersonExceptions("O email precisa conter @");
         }
-        if (!String.valueOf(height).contains(",")){
-            throw new PersonExceptions("A altura precisa ficar no padrão Brasileiro, usando a virgula");
-        }
         this.email = email;
         this.name = name;
         this.age = age;
