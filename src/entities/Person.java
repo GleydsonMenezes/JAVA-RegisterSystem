@@ -1,5 +1,9 @@
 package entities;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
 public class Person {
 
     private String name;
@@ -7,6 +11,7 @@ public class Person {
     private Integer age;
     private Double height;
 
+    List<Person> person = new ArrayList<>();
 
     public Person(String name, String email, Integer age, Double height) {
         if (age < 18){
@@ -58,11 +63,6 @@ public class Person {
 
     @Override
     public String toString() {
-        return "Person{" +
-                "name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", age=" + age +
-                ", height=" + height +
-                '}';
+        return "nome: " + name + "\nEmail: " + email + "\nIdade: " + age + "\nAltura: " + height;
     }
 }
