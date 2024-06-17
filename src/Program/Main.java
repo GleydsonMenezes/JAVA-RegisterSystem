@@ -88,6 +88,20 @@ public class Main {
 
                 break;
             case 2:
+
+                for (File file : files.listFiles()){
+                        try(BufferedReader br = new BufferedReader(new FileReader(file))){
+
+                            List<String> names = new ArrayList<>();
+                            String line = br.readLine();
+                            String[] fields = line.split("\\n", 2);
+                            names.add(fields[0]);
+                            names.forEach(System.out::println);
+                        } catch (IOException e) {
+                            System.out.println("Arquivo não encontrado");
+                        }
+
+                }
                 break;
             case 3:
 
