@@ -9,10 +9,12 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) {
 
+        Locale.setDefault(Locale.GERMANY);
         Scanner sc = new Scanner(System.in);
 
         List<String> questions = new ArrayList<>();
         List<String> emails = new ArrayList<>();
+        List<String> names = new ArrayList<>();
         List<String> menu = new ArrayList<>(Arrays.asList(
                 "1 - Cadastrar o usuário",
                 "2 - Listar todos usuários cadastrados",
@@ -109,22 +111,25 @@ public class Main {
                 break;
             case 2:
 
+                int aux = 1;
                 for (File file : directory.listFiles()){
-                        try(BufferedReader br = new BufferedReader(new FileReader(file))){
+                    try(BufferedReader br = new BufferedReader(new FileReader(file))){
 
-
-                            List<String> names = new ArrayList<>();
-                            String line = br.readLine();
-                                String[] fields = line.split("\\n");
-                                names.add(fields[0]);
-                                names.forEach(System.out::println);
-                        } catch (IOException e) {
-                            System.out.println("Arquivo não encontrado");
+                        String line = br.readLine();
+                        while(line != null) {
+                            names.add(aux + " - " + line);
+                            aux++;
+                            break;
                         }
-
+                    } catch (IOException e) {
+                        System.out.println("Arquivo não encontrado");
+                    }
                 }
+                names.forEach(System.out::println);
                 break;
+
             case 3:
+
 
 
                 break;
