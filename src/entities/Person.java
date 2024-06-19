@@ -1,5 +1,9 @@
 package entities;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -11,7 +15,7 @@ public class Person {
     private Integer age;
     private Double height;
 
-    List<Person> person = new ArrayList<>();
+    File files = new File("D:\\Workspace\\ws-IntelliJ\\JAVA- RegisterSystem\\src\\Pessoas");
 
     public Person(String name, String email, Integer age, Double height) {
         if (age < 18){
