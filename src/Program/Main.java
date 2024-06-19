@@ -29,14 +29,15 @@ public class Main {
         File directory = new File(filePath);
 
         int count = 1;
+        int Qcount = 4;
 
-        for (File file : directory.listFiles()){
+        for (File file : directory.listFiles()) {
             count++;
 
-            try(BufferedReader br = new BufferedReader(new FileReader(file))){
+            try (BufferedReader br = new BufferedReader(new FileReader(file))) {
 
                 String line = br.readLine();
-                while(line != null) {
+                while (line != null) {
                     line = br.readLine();
                     emails.add(line);
                     break;
@@ -47,11 +48,10 @@ public class Main {
         }
 
 
-
-        try(BufferedReader br = new BufferedReader(new FileReader(formularyPath))){
+        try (BufferedReader br = new BufferedReader(new FileReader(formularyPath))) {
 
             String line = br.readLine();
-            while(line != null){
+            while (line != null) {
                 String[] fields = line.split("\\?, 1");
                 questions.add(fields[0]);
                 line = br.readLine();
@@ -65,7 +65,7 @@ public class Main {
         int select = sc.nextInt();
         sc.nextLine();
 
-        switch(select){
+        switch (select) {
             case 1:
 
 
@@ -76,22 +76,22 @@ public class Main {
                 Integer age = sc.nextInt();
                 Double height = sc.nextDouble();
 
-                if (emails.contains(email)){
+                if (emails.contains(email)) {
                     throw new PersonExceptions("email já existe");
                 }
 
                 Person person = new Person(name, email, age, height);
 
                 String archiveName = person.getName().replaceAll("\\s", "").toUpperCase();
-                File archive = new File("D:\\Workspace\\ws-IntelliJ\\JAVA- RegisterSystem\\src\\Pessoas\\"+count+"-"+archiveName+".txt");
+                File archive = new File("D:\\Workspace\\ws-IntelliJ\\JAVA- RegisterSystem\\src\\Pessoas\\" + count + "-" + archiveName + ".txt");
 
-                try{
+                try {
                     archive.createNewFile();
-                }catch (IOException e){
+                } catch (IOException e) {
                     System.out.println(e);
                 }
 
-                try (BufferedWriter bw = new BufferedWriter(new FileWriter(archive))){
+                try (BufferedWriter bw = new BufferedWriter(new FileWriter(archive))) {
                     bw.write(person.getName());
                     bw.newLine();
                     bw.write(person.getEmail());
@@ -101,7 +101,7 @@ public class Main {
                     bw.write(String.valueOf(person.getHeight()));
 
 
-                }catch (IOException e){
+                } catch (IOException e) {
                     System.out.println(e);
                 }
 
@@ -112,11 +112,11 @@ public class Main {
             case 2:
 
                 int aux = 1;
-                for (File file : directory.listFiles()){
-                    try(BufferedReader br = new BufferedReader(new FileReader(file))){
+                for (File file : directory.listFiles()) {
+                    try (BufferedReader br = new BufferedReader(new FileReader(file))) {
 
                         String line = br.readLine();
-                        while(line != null) {
+                        while (line != null) {
                             names.add(aux + " - " + line);
                             aux++;
                             break;
@@ -129,17 +129,42 @@ public class Main {
                 break;
 
             case 3:
+                int formularyAux = 1;
+                    try (BufferedReader br = new BufferedReader(new FileReader(formularyPath))) {
+
+                        String line = br.readLine();
+                        while (line != null) {
+                            formularyAux++;
+                            line = br.readLine();
+                        }
+                    } catch (IOException e) {
+                        System.out.println("Arquivo não encontrado");
+                    }
+
+                System.out.print("Registre sua nova pergunta:");
+                try (BufferedWriter bw = new BufferedWriter(new FileWriter(formularyPath, true))) {
+                    String question = sc.nextLine();
+                    if (!question.contains("?")) {
+                        throw new IllegalArgumentException("É necessário ter interrogação para registrar uma pergunta");
+                    }
+
+                    bw.write("\n" + formularyAux + " - " + question);
 
 
-
+                } catch (IOException e) {
+                    System.out.println(e);
+                }
                 break;
+
             case 4:
+
                 break;
             case 5:
+
                 break;
+
         }
-
-
-        sc.close();
+            sc.close();
+        }
     }
-}
+
