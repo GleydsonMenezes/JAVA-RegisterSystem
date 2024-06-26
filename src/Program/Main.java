@@ -23,13 +23,12 @@ public class Main {
                 "5 - Pesquisar usuário por nome ou idade ou email"
         ));
 
-        String formularyPath = "D:\\Workspace\\ws-IntelliJ\\JAVA- RegisterSystem\\src\\formulary.txt";
-        String filePath = "D:\\Workspace\\ws-IntelliJ\\JAVA- RegisterSystem\\src\\Pessoas";
+        String formularyPath = "D:\\Workspace\\ws-IntelliJ\\JAVA-RegisterSystem\\src\\formulary.txt";
+        String filePath = "D:\\Workspace\\ws-IntelliJ\\JAVA-RegisterSystem\\src\\Pessoas";
 
         File directory = new File(filePath);
 
         int count = 1;
-        int Qcount = 4;
 
         for (File file : directory.listFiles()) {
             count++;
@@ -46,6 +45,7 @@ public class Main {
                 System.out.println("Arquivo não encontrado");
             }
         }
+        emails.forEach(System.out::println);
 
 
         try (BufferedReader br = new BufferedReader(new FileReader(formularyPath))) {
@@ -148,7 +148,7 @@ public class Main {
                         throw new IllegalArgumentException("É necessário ter interrogação para registrar uma pergunta");
                     }
 
-                    bw.write("\n" + formularyAux + " - " + question);
+                    bw.write(formularyAux + " - " + question);
 
 
                 } catch (IOException e) {
@@ -157,6 +157,41 @@ public class Main {
                 break;
 
             case 4:
+                System.out.print("Digite o número da questão a ser apagada:");
+                int c = sc.nextInt();
+                List<String> remainQuestions = new ArrayList<>();
+                if (c <= 4){
+                    throw new IllegalArgumentException("Não pode deletar as questões entre 1~4");
+                }
+                try (BufferedReader br = new BufferedReader(new FileReader(formularyPath))){
+                    String line = br.readLine();
+                    while (line != null){
+                        if (!line.contains(String.valueOf(c))){
+                            remainQuestions.add(line);
+                        }
+                        line = br.readLine();
+                    }
+
+
+                }catch (IOException e){
+                    System.out.println(e.getMessage());
+                }
+                int Qcount = 0;
+                try (BufferedWriter bw = new BufferedWriter(new FileWriter(formularyPath))) {
+                    for(String q : remainQuestions){
+                        if (q.length() > 0) {
+                            StringBuilder sb = new StringBuilder(q);
+                            sb.deleteCharAt(0);
+                            bw.write( String.valueOf(Qcount + 1) + sb.toString());
+                            Qcount++;
+                            bw.newLine();
+                        }
+                    }
+
+
+                } catch (IOException e) {
+                    System.out.println(e);
+                }
 
                 break;
             case 5:
