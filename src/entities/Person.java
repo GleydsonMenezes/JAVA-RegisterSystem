@@ -27,6 +27,7 @@ public class Person {
         if (!email.contains("@")) {
             throw new PersonExceptions("O email precisa conter @");
         }
+
         this.email = email;
         this.name = name;
         this.age = age;
